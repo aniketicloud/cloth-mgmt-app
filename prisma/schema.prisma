@@ -1,0 +1,43 @@
+// schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  clothes   Cloth[]
+}
+
+model Cloth {
+  id         String    @id @default(uuid())
+  name       String
+  categoryId String
+  locationId String?
+  userId     String
+  createdAt  DateTime  @default(now())
+  category   Category  @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  location   Location? @relation(fields: [locationId], references: [id], onDelete: SetNull)
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Category {
+  id        String  @id @default(uuid())
+  name      String  @unique
+  isDefault Boolean @default(false)
+  clothes   Cloth[]
+}
+
+model Location {
+  id      String  @id @default(uuid())
+  name    String  @unique
+  clothes Cloth[]
+}
