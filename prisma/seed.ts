@@ -1,18 +1,16 @@
-// prisma/seed.ts
-
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function main() {
   // Seed default categories
-  const defaultCategory = await prisma.category.upsert({
+  await prisma.category.upsert({
     where: { name: "Uncategorised" },
     update: {},
     create: {
       name: "Uncategorised",
       isDefault: true,
     },
-  });p
+  });
 
   await prisma.category.upsert({
     where: { name: "Shirt" },

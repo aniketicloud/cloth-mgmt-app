@@ -1,0 +1,8 @@
+{
+  "extends": "./tsconfig.json", // Inherit base config
+  "compilerOptions": {
+    "module": "CommonJS", // Override for seeding
+    "outDir": "./dist-seed" // Optional: Separate output folder
+  },
+  "include": ["prisma/seed.ts"] // Only apply to seed script
+}
